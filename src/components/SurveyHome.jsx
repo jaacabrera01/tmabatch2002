@@ -1,11 +1,12 @@
 import '../styles/SurveyHome.css'
+import logoImg from '../assets/school-logo.jpeg?url'
 
 export default function SurveyHome({ onStartSurvey, onViewResults }) {
-  const logoPath = import.meta.env.BASE_URL + 'school-logo.jpeg'
+  
   return (
     <div className="survey-home">
       <div className="home-banner">
-        <img src={logoPath} alt="School Logo" className="banner-logo" />
+        <img src={logoImg} alt="School Logo" className="banner-logo" />
       </div>
       
       <div className="home-content">
