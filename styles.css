@@ -1,0 +1,298 @@
+/* =============================================
+   TMA Reunion 2027 – Survey Styles
+   ============================================= */
+
+:root {
+  --primary: #1a3a5c;
+  --primary-light: #2a5082;
+  --accent: #e8a020;
+  --accent-light: #f5c25a;
+  --bg: #f4f6f9;
+  --surface: #ffffff;
+  --text: #2d3748;
+  --text-muted: #718096;
+  --border: #cbd5e0;
+  --error: #e53e3e;
+  --success: #276749;
+  --success-bg: #f0fff4;
+  --radius: 8px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── Layout ── */
+.container {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+}
+
+/* ── Header ── */
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2.5rem 2rem;
+  background: var(--primary);
+  color: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+}
+
+header h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+header h1::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: var(--accent);
+  margin: 0.6rem auto 0;
+  border-radius: 2px;
+}
+
+.subtitle {
+  font-size: 1rem;
+  opacity: 0.88;
+  max-width: 560px;
+  margin: 0.75rem auto 0;
+}
+
+/* ── Form Sections ── */
+.form-section {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.75rem 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-section h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--primary);
+  border-left: 4px solid var(--accent);
+  padding-left: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+/* ── Form Groups ── */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+}
+
+label small {
+  font-weight: 400;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.required {
+  color: var(--error);
+}
+
+/* ── Inputs ── */
+input[type='text'],
+input[type='email'],
+input[type='tel'],
+input[type='number'],
+textarea {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+input[type='text']:focus,
+input[type='email']:focus,
+input[type='tel']:focus,
+input[type='number']:focus,
+textarea:focus {
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 3px rgba(42, 80, 130, 0.15);
+}
+
+input.invalid,
+textarea.invalid {
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.12);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* ── Radio & Checkbox Groups ── */
+.radio-group,
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+}
+
+.radio-label,
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 400;
+  cursor: pointer;
+  font-size: 0.92rem;
+}
+
+.radio-label input,
+.checkbox-label input {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+}
+
+/* ── Error Messages ── */
+.error-msg {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--error);
+  margin-top: 0.3rem;
+  min-height: 1rem;
+}
+
+/* ── Form Actions ── */
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.btn-submit,
+.btn-reset {
+  padding: 0.7rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-submit {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn-submit:hover {
+  background: var(--primary-light);
+}
+
+.btn-submit:active {
+  transform: scale(0.97);
+}
+
+.btn-reset {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1.5px solid var(--border);
+}
+
+.btn-reset:hover {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ── Success Message ── */
+.success-message {
+  background: var(--success-bg);
+  border: 2px solid var(--success);
+  border-radius: var(--radius);
+  padding: 3rem 2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.success-icon {
+  font-size: 3rem;
+  color: var(--success);
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+
+.success-message h2 {
+  color: var(--success);
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.success-message p {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+/* ── Footer ── */
+footer {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  margin-top: 2rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 540px) {
+  header h1 {
+    font-size: 1.7rem;
+  }
+
+  .form-section {
+    padding: 1.25rem 1rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .btn-submit,
+  .btn-reset {
+    width: 100%;
+    text-align: center;
+  }
+}

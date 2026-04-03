@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TMA Reunion 2027 – Survey</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>TMA Reunion 2027</h1>
+      <p class="subtitle">We're planning an unforgettable reunion and we need your input! Please take a few minutes to fill out this survey.</p>
+    </header>
+
+    <form id="surveyForm" novalidate>
+
+      <!-- Section 1: Personal Info -->
+      <section class="form-section">
+        <h2>Personal Information</h2>
+
+        <div class="form-group">
+          <label for="fullName">Full Name <span class="required">*</span></label>
+          <input type="text" id="fullName" name="fullName" placeholder="Jane Doe" required />
+          <span class="error-msg" id="fullNameError"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address <span class="required">*</span></label>
+          <input type="email" id="email" name="email" placeholder="jane@example.com" required />
+          <span class="error-msg" id="emailError"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000" />
+        </div>
+
+        <div class="form-group">
+          <label for="gradYear">Graduation Year <span class="required">*</span></label>
+          <input type="number" id="gradYear" name="gradYear" placeholder="e.g. 2005" min="1950" max="2026" required />
+          <span class="error-msg" id="gradYearError"></span>
+        </div>
+      </section>
+
+      <!-- Section 2: Attendance -->
+      <section class="form-section">
+        <h2>Attendance</h2>
+
+        <div class="form-group">
+          <label>Will you attend the TMA Reunion 2027? <span class="required">*</span></label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="attendance" value="yes" required /> Yes, I'll be there!
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="attendance" value="maybe" /> Maybe / Not sure yet
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="attendance" value="no" /> No, I can't make it
+            </label>
+          </div>
+          <span class="error-msg" id="attendanceError"></span>
+        </div>
+
+        <div class="form-group" id="guestsGroup">
+          <label for="guests">How many guests will you bring?</label>
+          <input type="number" id="guests" name="guests" placeholder="0" min="0" max="10" value="0" />
+        </div>
+      </section>
+
+      <!-- Section 3: Preferences -->
+      <section class="form-section">
+        <h2>Preferences</h2>
+
+        <div class="form-group">
+          <label>Preferred reunion format <span class="required">*</span></label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="format" value="in-person" required /> In-person event
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="format" value="hybrid" /> Hybrid (in-person + virtual)
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="format" value="virtual" /> Fully virtual
+            </label>
+          </div>
+          <span class="error-msg" id="formatError"></span>
+        </div>
+
+        <div class="form-group">
+          <label>Preferred time of year</label>
+          <div class="radio-group">
+            <label class="radio-label"><input type="radio" name="season" value="spring" /> Spring (Mar–May)</label>
+            <label class="radio-label"><input type="radio" name="season" value="summer" /> Summer (Jun–Aug)</label>
+            <label class="radio-label"><input type="radio" name="season" value="fall" /> Fall (Sep–Nov)</label>
+            <label class="radio-label"><input type="radio" name="season" value="winter" /> Winter (Dec–Feb)</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Activities you'd enjoy <small>(select all that apply)</small></label>
+          <div class="checkbox-group">
+            <label class="checkbox-label"><input type="checkbox" name="activities" value="dinner" /> Formal dinner / gala</label>
+            <label class="checkbox-label"><input type="checkbox" name="activities" value="sports" /> Sports & outdoor activities</label>
+            <label class="checkbox-label"><input type="checkbox" name="activities" value="tour" /> Campus / city tour</label>
+            <label class="checkbox-label"><input type="checkbox" name="activities" value="games" /> Games & social mixers</label>
+            <label class="checkbox-label"><input type="checkbox" name="activities" value="panel" /> Alumni panel / talks</label>
+            <label class="checkbox-label"><input type="checkbox" name="activities" value="volunteer" /> Community service / volunteer day</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="dietary">Dietary Restrictions or Allergies</label>
+          <input type="text" id="dietary" name="dietary" placeholder="e.g. vegetarian, gluten-free, nut allergy…" />
+        </div>
+      </section>
+
+      <!-- Section 4: Additional Info -->
+      <section class="form-section">
+        <h2>Additional Information</h2>
+
+        <div class="form-group">
+          <label for="memories">Share a favourite memory from your TMA days</label>
+          <textarea id="memories" name="memories" rows="4" placeholder="Tell us something memorable…"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="suggestions">Suggestions or comments for the reunion committee</label>
+          <textarea id="suggestions" name="suggestions" rows="4" placeholder="Any ideas, requests, or feedback…"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="volunteer" name="volunteer" value="yes" />
+            I'm interested in volunteering to help organize the reunion
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="updates" name="updates" value="yes" checked />
+            Keep me updated on reunion news and announcements
+          </label>
+        </div>
+      </section>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">Submit Survey</button>
+        <button type="reset" class="btn-reset">Clear Form</button>
+      </div>
+    </form>
+
+    <div id="successMessage" class="success-message" hidden>
+      <div class="success-icon">✓</div>
+      <h2>Thank you for your response!</h2>
+      <p>Your survey has been submitted. We'll be in touch with reunion updates soon.</p>
+      <button class="btn-submit" onclick="resetForm()">Submit another response</button>
+    </div>
+
+    <footer>
+      <p>TMA Reunion 2027 &mdash; Survey powered by the Reunion Committee</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
