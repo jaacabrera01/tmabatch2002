@@ -11,7 +11,7 @@ export default function PhotoGallery({ onBack, onViewSurvey, onViewResults }) {
   const fileInputRef = useRef(null)
   const [selectedImage, setSelectedImage] = useState(null)
 
-  // Load photos on mount and auto-refresh
+  // Load photos on mount
   useEffect(() => {
     const loadPhotos = async () => {
       setLoading(true)
@@ -19,12 +19,7 @@ export default function PhotoGallery({ onBack, onViewSurvey, onViewResults }) {
       setPhotos(loadedPhotos)
       setLoading(false)
     }
-    
     loadPhotos()
-    
-    // Auto-refresh every 2 seconds to show new photos
-    const interval = setInterval(loadPhotos, 2000)
-    return () => clearInterval(interval)
   }, [])
 
   const handleFileSelect = async (e) => {

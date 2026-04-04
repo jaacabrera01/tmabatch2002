@@ -1,23 +1,26 @@
-// Uses backend API to store survey responses
-// All data is synced across devices in real-time
-
-const API_URL = 'http://localhost:3001/api'
+// Saves to localStorage for GitHub Pages compatibility
+// Use localStorage since GitHub Pages is static-only (no backend)
 
 export const submitSurvey = async (formData) => {
   try {
-    const response = await fetch(`${API_URL}/surveys`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-
-    if (!response.ok) {
-      throw new Error('Failed to submit survey')
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 500))
+    
+    // Get existing responses from localStorage
+    const existingResponses = JSON.parse(localStorage.getItem('surveyResponses') || '[]')
+    
+    // Add new response with timestamp
+    const newResponse = {
+      ...formData,
+      timestamp: new Date().toISOString(),
+      id: Date.now().toString()
     }
-
-    const newResponse = await response.json()
+    
+    existingResponses.push(newResponse)
+    
+    // Save back to localStorage
+    localStorage.setItem('surveyResponses', JSON.stringify(existingResponses))
+    
     console.log('Survey submitted:', newResponse)
     return newResponse
   } catch (error) {
@@ -28,11 +31,7 @@ export const submitSurvey = async (formData) => {
 
 export const getSurveyResponses = async () => {
   try {
-    const response = await fetch(`${API_URL}/surveys`)
-    if (!response.ok) {
-      throw new Error('Failed to fetch surveys')
-    }
-    return await response.json()
+    return JSON.parse(localStorage.getItem('surveyResponses') || '[]')
   } catch (error) {
     console.error('Error fetching responses:', error)
     return []

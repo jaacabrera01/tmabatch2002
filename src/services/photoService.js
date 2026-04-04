@@ -1,28 +1,18 @@
-// Uses backend API to store photos
-// All photos are synced across devices in real-time
-
-const API_URL = 'http://localhost:3001/api'
+// Uses localStorage for GitHub Pages compatibility
+// Works on GitHub Pages static hosting
 
 export const submitPhoto = async (photoData, caption = '') => {
   try {
-    const response = await fetch(`${API_URL}/photos`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        data: photoData,
-        caption: caption,
-        uploader: 'Anonymous'
-      })
-    })
-
-    if (!response.ok) {
-      throw new Error('Failed to upload photo')
+    const photos = getPhotos()
+    const newPhoto = {
+      id: Date.now(),
+      data: photoData, // Base64 encoded image
+      caption: caption,
+      timestamp: new Date().toISOString(),
+      uploader: 'Anonymous'
     }
-
-    const newPhoto = await response.json()
-    console.log('Photo uploaded:', newPhoto)
+    photos.push(newPhoto)
+    localStorage.setItem('galleryPhotos', JSON.stringify(photos))
     return newPhoto
   } catch (err) {
     console.error('Error saving photo:', err)
@@ -32,11 +22,8 @@ export const submitPhoto = async (photoData, caption = '') => {
 
 export const getPhotos = async () => {
   try {
-    const response = await fetch(`${API_URL}/photos`)
-    if (!response.ok) {
-      throw new Error('Failed to fetch photos')
-    }
-    return await response.json()
+    const photos = localStorage.getItem('galleryPhotos')
+    return photos ? JSON.parse(photos) : []
   } catch (err) {
     console.error('Error retrieving photos:', err)
     return []
@@ -45,14 +32,9 @@ export const getPhotos = async () => {
 
 export const deletePhoto = async (photoId) => {
   try {
-    const response = await fetch(`${API_URL}/photos/${photoId}`, {
-      method: 'DELETE'
-    })
-
-    if (!response.ok) {
-      throw new Error('Failed to delete photo')
-    }
-
+    const photos = getPhotos()
+    const filtered = photos.filter(p => p.id !== photoId)
+    localStorage.setItem('galleryPhotos', JSON.stringify(filtered))
     return true
   } catch (err) {
     console.error('Error deleting photo:', err)

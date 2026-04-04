@@ -20,10 +20,6 @@ export default function SurveyResults({ onBack, onBackHome, onViewGallery }) {
       calculateStats(allResponses)
     }
     loadResponses()
-    
-    // Auto-refresh every 3 seconds to show live updates
-    const interval = setInterval(loadResponses, 3000)
-    return () => clearInterval(interval)
   }, [])
 
   const calculateStats = (data) => {
