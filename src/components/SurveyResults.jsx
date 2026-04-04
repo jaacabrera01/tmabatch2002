@@ -80,8 +80,9 @@ export default function SurveyResults({ onBack, onBackHome, onViewGallery }) {
     return colors[venue] || 'blue'
   }
 
-  const handleExportData = () => {
-    exportAllData(responses, getPhotos())
+  const handleExportData = async () => {
+    const photos = await getPhotos()
+    exportAllData(responses, photos)
   }
 
   return (
