@@ -1,0 +1,17 @@
+{
+  "name": "2027 Reunion Survey - Academy of Life & Batholism",
+  "short_name": "Reunion Survey",
+  "description": "Survey for the upcoming 2027 class reunion",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#667eea",
+  "icons": [
+    {
+      "src": "/school-logo.jpeg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}
