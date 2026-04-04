@@ -6,6 +6,7 @@ export default function SurveyForm({ onSubmitSuccess, onBack, onViewResults, onV
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    mobileNumber: '',
     section: '',
     preferredMonth: '',
     preferredVenue: '',
@@ -36,20 +37,20 @@ export default function SurveyForm({ onSubmitSuccess, onBack, onViewResults, onV
       return
     }
 
-    // Check for duplicate name or email
-    const existingResponses = getSurveyResponses()
-    const isDuplicate = existingResponses.some(response => 
-      response.name.toLowerCase() === formData.name.toLowerCase() || 
-      response.email.toLowerCase() === formData.email.toLowerCase()
-    )
-
-    if (isDuplicate) {
-      setError('This name or email has already submitted a response. Please use different information.')
-      setLoading(false)
-      return
-    }
-
     try {
+      // Check for duplicate name or email
+      const existingResponses = await getSurveyResponses()
+      const isDuplicate = existingResponses.some(response => 
+        response.name.toLowerCase() === formData.name.toLowerCase() || 
+        response.email.toLowerCase() === formData.email.toLowerCase()
+      )
+
+      if (isDuplicate) {
+        setError('This name or email has already submitted a response. Please use different information.')
+        setLoading(false)
+        return
+      }
+
       await submitSurvey(formData)
       setSubmitted(true)
       setLoading(false)
@@ -80,7 +81,6 @@ export default function SurveyForm({ onSubmitSuccess, onBack, onViewResults, onV
           <div className="thank-you-container">
             <div className="thank-you-message">
               <h2>Thank You!</h2>
-              <p>Thank you for your response.</p>
               <p className="redirect-text">Redirecting to results...</p>
             </div>
           </div>
@@ -125,6 +125,20 @@ export default function SurveyForm({ onSubmitSuccess, onBack, onViewResults, onV
             onChange={handleChange}
             placeholder="jane@example.com"
             required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="mobileNumber">Mobile Number</label>
+          <input
+            type="tel"
+            id="mobileNumber"
+            name="mobileNumber"
+            value={formData.mobileNumber}
+            onChange={handleChange}
+            placeholder="09XX XXX XXXX"
+            pattern="^(\+63|0)?9\d{9}$"
+            title="Philippine format: 09XX XXX XXXX or +639XX XXX XXXX"
           />
         </div>
 

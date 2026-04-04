@@ -1,14 +1,31 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { submitPhoto, getPhotos, deletePhoto, convertImageToBase64 } from '../services/photoService'
 import '../styles/PhotoGallery.css'
 
 export default function PhotoGallery({ onBack, onViewSurvey, onViewResults }) {
-  const [photos, setPhotos] = useState(getPhotos())
+  const [photos, setPhotos] = useState([])
   const [caption, setCaption] = useState('')
   const [uploading, setUploading] = useState(false)
   const [uploaded, setUploaded] = useState(false)
+  const [loading, setLoading] = useState(true)
   const fileInputRef = useRef(null)
   const [selectedImage, setSelectedImage] = useState(null)
+
+  // Load photos on mount and auto-refresh
+  useEffect(() => {
+    const loadPhotos = async () => {
+      setLoading(true)
+      const loadedPhotos = await getPhotos()
+      setPhotos(loadedPhotos)
+      setLoading(false)
+    }
+    
+    loadPhotos()
+    
+    // Auto-refresh every 2 seconds to show new photos
+    const interval = setInterval(loadPhotos, 2000)
+    return () => clearInterval(interval)
+  }, [])
 
   const handleFileSelect = async (e) => {
     const file = e.target.files?.[0]
@@ -37,8 +54,9 @@ export default function PhotoGallery({ onBack, onViewSurvey, onViewResults }) {
 
     setUploading(true)
     try {
-      submitPhoto(selectedImage, caption)
-      setPhotos(getPhotos())
+      await submitPhoto(selectedImage, caption)
+      const updatedPhotos = await getPhotos()
+      setPhotos(updatedPhotos)
       setSelectedImage(null)
       setCaption('')
       setUploaded(true)
@@ -54,10 +72,16 @@ export default function PhotoGallery({ onBack, onViewSurvey, onViewResults }) {
     }
   }
 
-  const handleDeletePhoto = (photoId) => {
+  const handleDeletePhoto = async (photoId) => {
     if (window.confirm('Delete this photo?')) {
-      deletePhoto(photoId)
-      setPhotos(getPhotos())
+      try {
+        await deletePhoto(photoId)
+        const updatedPhotos = await getPhotos()
+        setPhotos(updatedPhotos)
+      } catch (err) {
+        alert('Error deleting photo')
+        console.error(err)
+      }
     }
   }
 
@@ -131,7 +155,9 @@ export default function PhotoGallery({ onBack, onViewSurvey, onViewResults }) {
         <div className="photos-section">
           <h2>Reunion Photos ({photos.length})</h2>
           
-          {photos.length > 0 ? (
+          {loading ? (
+            <div className="loading">Loading photos...</div>
+          ) : photos.length > 0 ? (
             <div className="photos-grid">
               {photos.slice().reverse().map((photo) => (
                 <div key={photo.id} className="photo-card">

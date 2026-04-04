@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { getSurveyResponses } from '../services/surveyService'
+import { getPhotos } from '../services/photoService'
+import { exportAllData } from '../services/exportService'
 import '../styles/SurveyResults.css'
 
 export default function SurveyResults({ onBack, onBackHome, onViewGallery }) {
@@ -12,9 +14,16 @@ export default function SurveyResults({ onBack, onBackHome, onViewGallery }) {
   })
 
   useEffect(() => {
-    const allResponses = getSurveyResponses()
-    setResponses(allResponses)
-    calculateStats(allResponses)
+    const loadResponses = async () => {
+      const allResponses = await getSurveyResponses()
+      setResponses(allResponses)
+      calculateStats(allResponses)
+    }
+    loadResponses()
+    
+    // Auto-refresh every 3 seconds to show live updates
+    const interval = setInterval(loadResponses, 3000)
+    return () => clearInterval(interval)
   }, [])
 
   const calculateStats = (data) => {
@@ -71,11 +80,22 @@ export default function SurveyResults({ onBack, onBackHome, onViewGallery }) {
     return colors[venue] || 'blue'
   }
 
+  const handleExportData = () => {
+    exportAllData(responses, getPhotos())
+  }
+
   return (
     <div className="app-container results-page">
       <header className="app-header-survey">
         <button className="back-button" onClick={onBack}>←</button>
         <h1>Survey Results</h1>
+        <button 
+          className="export-button"
+          onClick={handleExportData}
+          title="Download responses and photos as Excel"
+        >
+          📥 Export
+        </button>
       </header>
 
       <div className="results-content">

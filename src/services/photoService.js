@@ -1,15 +1,28 @@
-export const submitPhoto = (photoData, caption = '') => {
+// Uses backend API to store photos
+// All photos are synced across devices in real-time
+
+const API_URL = 'http://localhost:3001/api'
+
+export const submitPhoto = async (photoData, caption = '') => {
   try {
-    const photos = getPhotos()
-    const newPhoto = {
-      id: Date.now(),
-      data: photoData, // Base64 encoded image
-      caption: caption,
-      timestamp: new Date().toISOString(),
-      uploader: 'Anonymous'
+    const response = await fetch(`${API_URL}/photos`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        data: photoData,
+        caption: caption,
+        uploader: 'Anonymous'
+      })
+    })
+
+    if (!response.ok) {
+      throw new Error('Failed to upload photo')
     }
-    photos.push(newPhoto)
-    localStorage.setItem('galleryPhotos', JSON.stringify(photos))
+
+    const newPhoto = await response.json()
+    console.log('Photo uploaded:', newPhoto)
     return newPhoto
   } catch (err) {
     console.error('Error saving photo:', err)
@@ -17,21 +30,29 @@ export const submitPhoto = (photoData, caption = '') => {
   }
 }
 
-export const getPhotos = () => {
+export const getPhotos = async () => {
   try {
-    const photos = localStorage.getItem('galleryPhotos')
-    return photos ? JSON.parse(photos) : []
+    const response = await fetch(`${API_URL}/photos`)
+    if (!response.ok) {
+      throw new Error('Failed to fetch photos')
+    }
+    return await response.json()
   } catch (err) {
     console.error('Error retrieving photos:', err)
     return []
   }
 }
 
-export const deletePhoto = (photoId) => {
+export const deletePhoto = async (photoId) => {
   try {
-    const photos = getPhotos()
-    const filtered = photos.filter(p => p.id !== photoId)
-    localStorage.setItem('galleryPhotos', JSON.stringify(filtered))
+    const response = await fetch(`${API_URL}/photos/${photoId}`, {
+      method: 'DELETE'
+    })
+
+    if (!response.ok) {
+      throw new Error('Failed to delete photo')
+    }
+
     return true
   } catch (err) {
     console.error('Error deleting photo:', err)
